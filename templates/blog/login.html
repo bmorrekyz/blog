@@ -1,0 +1,8 @@
+<a href="{% url 'index' %}">Blog</a>
+
+<form action="{% url 'login_submit' %}" method="post">
+  {% csrf_token %}
+  <input type="text" placeholder="Username" name="username" maxlength="20">
+  <input type="text" placeholder="Password" name="password" maxlength="20">
+  <button type="submit">Login</button>
+</form>
