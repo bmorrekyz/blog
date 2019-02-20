@@ -3,45 +3,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" type="text/css" href="{% static 'blog/css/template.css' %}">
-<script
-			  src="https://code.jquery.com/jquery-3.3.1.min.js"
-			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-			  crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/layout.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/template.css' %}">
 
-{% block head_extra %}{% endblock %}
+	<script
+				  src="https://code.jquery.com/jquery-3.3.1.min.js"
+				  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+				  crossorigin="anonymous"></script>
 
+	{% block head_extra %}{% endblock %}
 </head>
-<body>
 
-<div id="header" class="center">
-  {% block header %}{% endblock %}
-</div>
+<body id="main-container">
 
-<div id="navbar">
-  {% block navbar %}{% endblock %}
-</div>
+	<header id="header" class="header">
+	  {% block header %}{% endblock %}
+	</header>
 
-<div id="content" class="content">
-  {% block content %}{% endblock %}
-</div>
+	<navbar id="navbar" class="navbar">
+			{% block navbar %}{% endblock %}
+	</navbar>
+
+	<article id="content" class="padded">
+	  {% block content %}{% endblock %}
+	</article>
+
+	<aside id="aside" class="padded">
+	 {% block aside %}{% endblock %}
+	</aside>
 
 <script>
 
 $(document).ready(function() {
 
-  // shrink navbar onscroll
+  // hide navbar onscroll
   let topOffset = $('#navbar')['0']['offsetTop'];
   window.onscroll = () => {
     let el = $('#navbar');
-    (window.pageYOffset >= topOffset) ? el.addClass("fixed") : el.removeClass("fixed");
+    (window.pageYOffset >= topOffset) ? el.addClass("fixed-top") : el.removeClass("fixed-top");
   };
 
-
 });
-
 
 </script>
 

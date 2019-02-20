@@ -1,13 +1,24 @@
 
 ​{% extends "blog/template.html" %}
 
+{% block head_extra %}
+
+<style>
+  #content {
+    /* overwritten grid for aesthetic pleasure */
+    grid-column: 2 / 12;
+    grid-row: 5;
+  }
+</style>
+{% endblock %}
+
 {% block header %}
   <h2>Dinara Sagitova</h2>
   <p>Some Catchy Line Goes Here...</p>
 {% endblock %}
 
 {% block navbar %}
-    <a href="{% url 'index' %}">Blog</a>
+    <a href="{% url 'index' %}" class="nav-menu left">Blog</a>
 {% endblock %}
 
 {% block content %}
@@ -15,8 +26,8 @@
 
   <form action="{% url 'login_submit' %}" method="post">
     {% csrf_token %}
-    <input type="text" placeholder="Username" name="username" maxlength="20">
-    <input type="text" placeholder="Password" name="password" maxlength="20">
+    <input type="text" placeholder="Username" name="username" maxlength="20" required>
+    <input type="text" placeholder="Password" name="password" maxlength="20" required>
     <br><br>
     <button type="submit">Login</button>
   </form>

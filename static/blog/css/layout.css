@@ -1,0 +1,41 @@
+/* mobile first */
+
+#main-container {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0,1fr));
+    grid-gap: 10px;
+    margin: 0 auto;
+    padding: 0 auto;
+}
+
+#header {
+  grid-column: 1 / 13;
+  grid-row: 1;
+}
+
+#navbar {
+    grid-column: 1 / 13;
+    grid-row: 2;
+}
+
+#content {
+    /* 12 cols on mobile, 9 on screen size > 785px */
+    grid-column: 2 / 12;
+    grid-row: 3;
+}
+
+#aside {
+    grid-column: 9 / 12;
+    grid-row: 3;
+    display: none;
+}
+
+#aside { display: none; }
+
+/* desktop view */
+@media screen and (min-width: 1000px) {
+
+  #content { grid-column: 2 / 9; }
+  #aside { display: block; }
+
+}

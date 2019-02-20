@@ -8,23 +8,33 @@
 
 {% block navbar %}
     {% if userIsLoggedIn %}
-      <a href="{% url 'dashboard' %}">Dashboard</a>
-      <a href="{% url 'logout' %}" class="right">Logout</a>
+      <a href="{% url 'dashboard' %}" class="nav-menu left">Dashboard</a>
+      <a href="{% url 'logout' %}" class="nav-menu right">Logout</a>
     {% else %}
-      <a href="{% url 'index' %}">Blog</a>
-      <a href="{% url 'index' %}">About</a>
-      <a href="{% url 'login' %}" class="right">Login</a>
+      <a href="{% url 'index' %}" class="nav-menu left">Blog</a>
+      <a href="{% url 'index' %}" class="nav-menu left">About</a>
+      <a href="{% url 'login' %}" class="nav-menu right">Login</a>
     {% endif %}
 {% endblock %}
 
 {% block content %}
 
-<h3>Welcome to my new blog</h3>
 {% for entry in blog_list %}
-    <p>
-    {{ entry.body|apply_markup:entry.markup }}
-    </p>
-    <hr>
+  <h2>{{ entry.title }}</h2>
+  <h5>{{ entry.created }}</h5>
+  <p>{{ entry.body|apply_markup:entry.markup }}</p>
+  <br><br><br>
 {% endfor %}
 
+{% endblock %}
+
+{% block aside %}
+  <h2>Archive</h2>
+  {% if blog_list %}
+    {% for blog in blog_list %}
+        <p>{{ blog.title }} </p>
+    {% endfor %}
+  {% else %}
+      <p>No blog history</p>
+  {% endif %}
 {% endblock %}
