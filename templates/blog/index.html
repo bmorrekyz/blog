@@ -30,12 +30,14 @@
 {% endblock %}
 
 {% block aside %}
-  <h2>Archive</h2>
-  {% if blog_list %}
-    {% for blog in blog_list %}
+  <div class="inner-aside padded center">
+    <h2>Aside on Master</h2>
+    {% if blog_list %}
+      {% for blog in blog_list %}
         <p>{{ blog.title }} </p>
-    {% endfor %}
-  {% else %}
+      {% endfor %}
+    {% else %}
       <p>No blog history</p>
-  {% endif %}
+    {% endif %}
+  </div>
 {% endblock %}

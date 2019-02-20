@@ -30,17 +30,28 @@
   color: white;
 }
 
+#aside {
+  position: relative;
+  right: 0;
+}
+
 .fixed-top {
   position: fixed;
   top: 0;
   width: 100%;
 }
 
-/* .fixed-top + #content {
-  padding-top: 50px;
-} */
 
 .left { float: left; }
 .right { float: right; }
 .center { text-align: center; }
 .padded { padding: 10px; }
+
+.inner-aside {
+  position: sticky;
+  top: 100px;
+  left: 0px;
+
+  /* for testing */
+  border: 1px solid orange;
+}
