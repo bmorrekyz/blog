@@ -1,8 +1,25 @@
-<a href="{% url 'index' %}">Blog</a>
 
-<form action="{% url 'login_submit' %}" method="post">
-  {% csrf_token %}
-  <input type="text" placeholder="Username" name="username" maxlength="20">
-  <input type="text" placeholder="Password" name="password" maxlength="20">
-  <button type="submit">Login</button>
-</form>
+​{% extends "blog/template.html" %}
+
+{% block header %}
+  <h2>Dinara Sagitova</h2>
+  <p>Some Catchy Line Goes Here...</p>
+{% endblock %}
+
+{% block navbar %}
+    <a href="{% url 'index' %}">Blog</a>
+{% endblock %}
+
+{% block content %}
+<div class="center">
+
+  <form action="{% url 'login_submit' %}" method="post">
+    {% csrf_token %}
+    <input type="text" placeholder="Username" name="username" maxlength="20">
+    <input type="text" placeholder="Password" name="password" maxlength="20">
+    <br><br>
+    <button type="submit">Login</button>
+  </form>
+
+</div>
+{% endblock %}

@@ -1,15 +1,15 @@
-​<!DOCTYPE html>
-<html>
-<head>
-</head>
+{% extends "blog/template.html" %}
 
-<body>
+{% block header %}
+  <h2>Dinara Sagitova</h2>
+  <p>Some Catchy Line Goes Here...</p>
+{% endblock %}
 
-<div>
-  <h3>Welcome to your dashboard</h3>
+{% block navbar %}
   <a href="{% url 'index' %}">Blog</a>
-  <a href="{% url 'logout' %}">Logout</a>
-</div>
+  <a href="{% url 'logout' %}" class="right">Logout</a>
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+  <h3>Welcome to your dashboard!</h3>
+{% endblock %}

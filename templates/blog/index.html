@@ -1,25 +1,23 @@
-​<!DOCTYPE html>
-<html>
-<head>
-<style>
-* {box-sizing: border-box;}
-</style>
-</head>
+​{% extends "blog/template.html" %}
 
-<body>
+{% block header %}
+  <h2>Dinara Sagitova</h2>
+  <p>Some Catchy Line Goes Here...</p>
+{% endblock %}
 
-<div>
-  <div class="login-container">
+{% block navbar %}
     {% if userIsLoggedIn %}
       <a href="{% url 'dashboard' %}">Dashboard</a>
-      <br>
-      <a href="{% url 'logout' %}">Logout</a>
+      <a href="{% url 'logout' %}" class="right">Logout</a>
     {% else %}
-      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'index' %}">Blog</a>
+      <a href="{% url 'index' %}">About</a>
+      <a href="{% url 'login' %}" class="right">Login</a>
     {% endif %}
-  </div>
-</div>
+{% endblock %}
 
+{% block content %}
 
-</body>
-</html>
+<h3>Welcome to my new blog</h3>
+
+{% endblock %}

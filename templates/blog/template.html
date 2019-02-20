@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" href="{% static 'blog/css/template.css' %}">
+<script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+
+{% block head_extra %}{% endblock %}
+
+</head>
+<body>
+
+<div id="header" class="center">
+  {% block header %}{% endblock %}
+</div>
+
+<div id="navbar">
+  {% block navbar %}{% endblock %}
+</div>
+
+<div id="content" class="content">
+  {% block content %}{% endblock %}
+</div>
+
+<script>
+
+$(document).ready(function() {
+
+  // shrink navbar onscroll
+  let topOffset = $('#navbar')['0']['offsetTop'];
+  window.onscroll = () => {
+    let el = $('#navbar');
+    (window.pageYOffset >= topOffset) ? el.addClass("fixed") : el.removeClass("fixed");
+  };
+
+
+});
+
+
+</script>
+
+{% block script_extra %}{% endblock %}
+
+</body>
+</html>

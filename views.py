@@ -57,3 +57,6 @@ def login_submit(request):
 def logout(request):
     auth_logout(request)
     return redirect('index')
+
+def template(request):
+    return render(request, 'blog/template.html')
