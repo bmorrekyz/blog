@@ -6,7 +6,7 @@
 <style>
   #content {
     /* overwritten grid for aesthetic pleasure */
-    grid-column: 2 / 12;
+    grid-column: 2 / 11;
     grid-row: 5;
   }
 </style>
@@ -18,9 +18,15 @@
 {% endblock %}
 
 {% block navbar %}
-  <a href="{% url 'index' %}" id="menu_" class="nav-menu left">Blog</a>
-  <a href="{% url 'about' %}" id="menu_about" class="nav-menu left">About</a>
-  <a href="{% url 'login' %}" id="menu_login" class="nav-menu right">Login</a>
+  {% if userIsLoggedIn %}
+    <a href="{% url 'dashboard' %}" id="menu_dashboard" class="nav-menu left">Dashboard</a>
+    <a href="{% url 'about' %}" id="menu_about" class="nav-menu left">About</a>
+    <a href="{% url 'logout' %}" id="menu_logout" class="nav-menu right">Logout</a>
+  {% else %}
+    <a href="{% url 'index' %}" id="menu_" class="nav-menu left">Blog</a>
+    <a href="{% url 'about' %}" id="menu_about" class="nav-menu left">About</a>
+    <a href="{% url 'login' %}" id="menu_login" class="nav-menu right">Login</a>
+  {% endif %}
 {% endblock %}
 
 {% block content %}

@@ -18,6 +18,11 @@
     grid-row: 2;
 }
 
+div#nav-inner {
+    grid-column: 2 / 12;
+    grid-row: 2;
+}
+
 #content {
     /* 12 cols on mobile, 9 on screen size > 785px */
     grid-column: 2 / 12;

@@ -21,26 +21,32 @@
 {% block content %}
 
 {% for entry in blog_list %}
-  <h2>{{ entry.title }}</h2>
+  <h2><a href="{{entry.slug}}"> {{entry.title}} </a></h2>
   <h5>{{ entry.created }}</h5>
-  <p>{{ entry.body|apply_markup:entry.markup }}</p>
+  <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
+  <p class="right"><a href="{{entry.slug}}">... continue reading ...</a></p>
   <br><br><br>
 {% endfor %}
 
 {% endblock %}
 
 {% block aside %}
-<div id="inner-aside" class="inner-aside padded center">
+<div id="inner-aside" class="inner-aside padded">
+  <div id="search">
+    <input type="text" id="search_query" name="search_query" placeholder="search blog content" value="">
+    <input id="search_btn" type="button" value="search">
+  </div>
 
-  <h2>Archive</h2>
-  <h3>2019 (2) </h3>
-  <p>January (1) </p>
-  <p>February (1)</p>
-  <br>
-  <h3>2018 (6) </h3>
-  <p>October (2)</p>
-  <p>November (1) </p>
-  <p>December (3) </p>
+  <div id="archive">
+    <h2>Archive</h2>
+    <h3>2019 (2) </h3>
+    <p>January (1) </p>
+    <p>February (1)</p>
+
+    <h3>2018 (3) </h3>
+    <p>November (1) </p>
+    <p>December (2) </p>
+  </div>
 
 </div>
 {% endblock %}

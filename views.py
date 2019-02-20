@@ -22,8 +22,25 @@ from .models import Entry
 
 """
 
+def entry(request, slug):
+    entry = Entry.objects.filter(slug=slug)[0]
+    context = {
+        "userIsLoggedIn" : request.user.is_authenticated,
+        "entry" : {
+            "title" : entry.title,
+            "created" : entry.created,
+            "body" : entry.body,
+            "markup": entry.markup,
+        }
+    }
+    return render(request, 'blog/entry_view.html', context)
+
+
 def about(request):
-    return render(request, 'blog/about.html')
+    context = {
+        "userIsLoggedIn" : request.user.is_authenticated
+    }
+    return render(request, 'blog/about.html', context)
 
 def index(request):
 

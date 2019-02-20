@@ -1,0 +1,49 @@
+
+​{% extends "blog/template.html" %}
+
+{% load markup_tags %}
+
+{% block head_extra %}
+
+<style>
+  #content {
+    /* overwritten grid for aesthetic pleasure */
+    grid-column: 2 / 12;
+    grid-row: 5;
+  }
+</style>
+{% endblock %}
+
+{% block header %}
+  <h2>Dinara Sagitova</h2>
+  <p>Some Catchy Line Goes Here...</p>
+{% endblock %}
+
+{% block navbar %}
+{% if userIsLoggedIn %}
+  <a href="{% url 'index' %}" id="menu_" class="nav-menu left">Blog</a>
+  <a href="{% url 'dashboard' %}" id="menu_dashboard" class="nav-menu left">Dashboard</a>
+  <a href="{% url 'about' %}" id="menu_about" class="nav-menu left">About</a>
+  <a href="{% url 'logout' %}" id="menu_logout" class="nav-menu right">Logout</a>
+{% else %}
+  <a href="{% url 'index' %}" id="menu_" class="nav-menu left">Blog</a>
+  <a href="{% url 'about' %}" id="menu_about" class="nav-menu left">About</a>
+  <a href="{% url 'login' %}" id="menu_login" class="nav-menu right">Login</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="">
+
+  {% if entry %}
+    <h2>{{ entry.title }}</h2>
+    <h5>{{ entry.created }}</h5>
+    <p>{{ entry.body|apply_markup:entry.markup }}</p>
+    <br><br><br>
+
+  {% else %}
+    <h2>Error: could not get this blog entry</h2>
+  {% endif %}
+
+</div>
+{% endblock %}

@@ -1,5 +1,8 @@
 * {
   box-sizing: border-box;
+
+  /* for testing */
+  /* border: 1px solid green; */
 }
 
 .header {
@@ -49,9 +52,10 @@
 
 .inner-aside {
   position: sticky;
-  top: 100px;
+  top: 150px;
   left: 0px;
+  margin: 10px;
 
   /* for testing */
-  border: 1px solid orange;
+  /* border: 1px solid orange; */
 }

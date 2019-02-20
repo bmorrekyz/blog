@@ -5,8 +5,8 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/layout.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/template.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/template_layout.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/template_style.css' %}">
 
 	<script
 				  src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -23,7 +23,9 @@
 	</header>
 
 	<navbar id="navbar" class="navbar">
+		<div id="nav-inner">
 			{% block navbar %}{% endblock %}
+		</div>
 	</navbar>
 
 	<article id="content" class="padded">
@@ -51,7 +53,12 @@ $(document).ready(function() {
 	else if (current_url.includes("dinarasagitova.com")){ var start_pos = 31; }
 
 	let selected_menu = current_url.substring(start_pos,current_url.length);
-	$('#menu_'+selected_menu).css({'color':'#C4A000'});
+	if ($('#menu_'+selected_menu)[0] !== undefined) {
+		$('#menu_'+selected_menu).css({'color':'#C4A000'});
+	} else {
+		// so that entry view highlights the "Blog" link
+		$('#menu_').css({'color':'#C4A000'});
+	}
 });
 
 </script>
