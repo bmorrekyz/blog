@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 
+from .models import Entry
 
 """
     authentication scenario draft 1
@@ -23,8 +24,11 @@ from django.contrib.auth import logout as auth_logout
 
 def index(request):
 
+    blog_list = Entry.objects.all().order_by('-created')
+
     context = {
-        "userIsLoggedIn" : request.user.is_authenticated
+        "userIsLoggedIn" : request.user.is_authenticated,
+        "blog_list" : blog_list
     }
 
     return render(request, 'blog/index.html', context)
@@ -57,6 +61,3 @@ def login_submit(request):
 def logout(request):
     auth_logout(request)
     return redirect('index')
-
-def template(request):
-    return render(request, 'blog/template.html')
