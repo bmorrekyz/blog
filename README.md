@@ -1,1 +1,1 @@
-# mysite
+# blog app for my site
