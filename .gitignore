@@ -1,2 +1,5 @@
 migrations/*
 __pycache__/*
+
+*.png
+*.jpeg

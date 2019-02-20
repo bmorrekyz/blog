@@ -22,6 +22,9 @@ from .models import Entry
 
 """
 
+def about(request):
+    return render(request, 'blog/about.html')
+
 def index(request):
 
     blog_list = Entry.objects.all().order_by('-created')

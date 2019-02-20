@@ -1,0 +1,62 @@
+
+​{% extends "blog/template.html" %}
+
+{% block head_extra %}
+
+<style>
+  #content {
+    /* overwritten grid for aesthetic pleasure */
+    grid-column: 2 / 12;
+    grid-row: 5;
+  }
+</style>
+{% endblock %}
+
+{% block header %}
+  <h2>Dinara Sagitova</h2>
+  <p>Some Catchy Line Goes Here...</p>
+{% endblock %}
+
+{% block navbar %}
+  <a href="{% url 'index' %}" class="nav-menu left">Blog</a>
+  <a href="{% url 'about' %}" class="nav-menu left">About</a>
+  <a href="{% url 'login' %}" class="nav-menu right">Login</a>
+{% endblock %}
+
+{% block content %}
+<div class="center">
+
+
+  <figure style="float:left;max-width:20%;">
+    <img src="/static/blog/images/about_pic.png" alt="Author playing disc golf at Crane Hill Disc Golf Course" width="100%">
+    <figcaption class="center"><small>Crane Hill Disc Golf Course in Wilbraham, MA</small></figcaption>
+  </figure>
+
+  <p style="text-align:justify;text-justify:inter-word;">
+    My name is Dinara (Dina) Sagitova. I am a software developer from Baltimore, MD.
+
+    <br><br>
+    Before I became a software developer, I studied Biochemistry at
+    <a href="https://www.umbc.edu/" target="_blank" style="color:#C4A000 !important;">UMBC</a>.
+
+    I fell in love with programming while working at a bioinformatics lab
+    (<a href="https://erilllab.umbc.edu/" target="_blank" style="color:#C4A000 !important;">Erill Lab</a>)
+    as a project coordinator and a database curator.
+
+    This newfound passion inspired me to earn a degree in Computer Science (BS).
+
+    <br><br>
+
+    Since then I also worked as a software developer at a financial firm developing a
+    loan origination platform and at the Research Information Technology Systems (RITS)
+    center at Johns Hopkins University.
+
+    <br><br>
+
+    This is a personal blog to write about software development,
+    and occasionally, about fun things I do in life, in general.
+
+  </p>
+
+</div>
+{% endblock %}
