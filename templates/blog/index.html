@@ -8,13 +8,13 @@
 
 {% block navbar %}
     {% if userIsLoggedIn %}
-      <a href="{% url 'dashboard' %}" class="nav-menu left">Dashboard</a>
-      <a href="{% url 'about' %}" class="nav-menu left">About</a>
-      <a href="{% url 'logout' %}" class="nav-menu right">Logout</a>
+      <a href="{% url 'dashboard' %}" id="menu_dashboard" class="nav-menu left">Dashboard</a>
+      <a href="{% url 'about' %}" id="menu_about" class="nav-menu left">About</a>
+      <a href="{% url 'logout' %}" id="menu_logout" class="nav-menu right">Logout</a>
     {% else %}
-      <a href="{% url 'index' %}" class="nav-menu left">Blog</a>
-      <a href="{% url 'about' %}" class="nav-menu left">About</a>
-      <a href="{% url 'login' %}" class="nav-menu right">Login</a>
+      <a href="{% url 'index' %}" id="menu_" class="nav-menu left">Blog</a>
+      <a href="{% url 'about' %}" id="menu_about" class="nav-menu left">About</a>
+      <a href="{% url 'login' %}" id="menu_login" class="nav-menu right">Login</a>
     {% endif %}
 {% endblock %}
 
@@ -30,14 +30,17 @@
 {% endblock %}
 
 {% block aside %}
-  <div class="inner-aside padded center">
-    <h2>Aside on Master</h2>
-    {% if blog_list %}
-      {% for blog in blog_list %}
-        <p>{{ blog.title }} </p>
-      {% endfor %}
-    {% else %}
-      <p>No blog history</p>
-    {% endif %}
-  </div>
+<div id="inner-aside" class="inner-aside padded center">
+
+  <h2>Archive</h2>
+  <h3>2019 (2) </h3>
+  <p>January (1) </p>
+  <p>February (1)</p>
+  <br>
+  <h3>2018 (6) </h3>
+  <p>October (2)</p>
+  <p>November (1) </p>
+  <p>December (3) </p>
+
+</div>
 {% endblock %}

@@ -31,7 +31,7 @@
 	</article>
 
 	<aside id="aside">
-	 {% block aside %}{% endblock %}
+	 		{% block aside %}{% endblock %}
 	</aside>
 
 <script>
@@ -45,6 +45,13 @@ $(document).ready(function() {
     (window.pageYOffset >= topOffset) ? el.addClass("fixed-top") : el.removeClass("fixed-top");
   };
 
+	// highlight menu for the current page
+	let current_url = location.href;
+	if (current_url.includes("localhost")) { var start_pos = 27; }
+	else if (current_url.includes("dinarasagitova.com")){ var start_pos = 31; }
+
+	let selected_menu = current_url.substring(start_pos,current_url.length);
+	$('#menu_'+selected_menu).css({'color':'#C4A000'});
 });
 
 </script>

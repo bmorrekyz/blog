@@ -30,12 +30,13 @@
     display: none;
 }
 
-#aside { display: none; }
+#aside, #inner-aside { display: none; }
+
 
 /* desktop view */
 @media screen and (min-width: 1000px) {
 
   #content { grid-column: 2 / 9; }
-  #aside { display: block; }
+  #aside, #inner-aside { display: block; }
 
 }
