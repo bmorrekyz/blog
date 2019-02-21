@@ -20,7 +20,13 @@
 {% block content %}
 <div class="center">
 
-  <h1>Monthly Archive</h1>
-
+  <h1>{{ month }} {{ year }} Archive </h1>
+  {% if posts %}
+    {% for post in posts %}
+      <p>
+        <a href="/blog/{{post.slug}}"> {{post.title}} </a>
+      </p>
+    {% endfor %}
+  {% endif %}
 </div>
 {% endblock %}

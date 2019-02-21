@@ -25,7 +25,7 @@ from .models import Entry
 """
 def yearly_archive(request, year):
 
-    query = "select * from blog_entry where EXTRACT(YEAR FROM created) = " + str(year) +";"
+    query = "select * from blog_entry where EXTRACT(YEAR FROM created) = " + str(year) + ";"
     yearly_posts = Entry.objects.raw(query)
 
     context = {
@@ -35,8 +35,20 @@ def yearly_archive(request, year):
 
     return render(request, 'blog/yearly_archive.html', context)
 
-def monthly_archive(request, month, year):
-    return render(request, 'blog/monthly_archive.html')
+def monthly_archive(request, year, month):
+
+    query = "select * from blog_entry where EXTRACT(MONTH FROM created) =  \
+             EXTRACT(MONTH FROM to_date('" + month + "', 'Month')) \
+             AND EXTRACT(YEAR FROM created) = " + str(year) + ";"
+
+    posts = Entry.objects.raw(query)
+
+    context = {
+        "month" : month,
+        "year" : year,
+        "posts" : posts
+    }
+    return render(request, 'blog/monthly_archive.html',context)
 
 def entry(request, slug):
     entry = Entry.objects.filter(slug=slug)[0]

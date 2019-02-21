@@ -46,20 +46,20 @@
     {% for year in archive_info %}
 
       <h3>
+        <a href="{{2019}}">2019</a>
+      </h3>
+      {% for month in year.2019 %}
+      <p style="padding-left:10px">
+        <a href="/blog/2019/{{month}}">{{month}}</a>
+      </p>
+      {% endfor %}
+
+      <h3>
         <a href="{{2018}}">2018</a>
       </h3>
       {% for month in year.2018 %}
         <p style="padding-left:10px">
           <a href="/blog/2018/{{month}}">{{month}}</a>
-        </p>
-      {% endfor %}
-
-      <h3>
-        <a href="{{2019}}">2019</a>
-      </h3>
-      {% for month in year.2019 %}
-        <p style="padding-left:10px">
-          <a href="/blog/2019/{{month}}">{{month}}</a>
         </p>
       {% endfor %}
 
