@@ -18,15 +18,13 @@
 {% endblock %}
 
 {% block content %}
-<div class="center">
+  <h1>{{year}} Yearly Archive</h1>
 
-  <form action="{% url 'login_submit' %}" method="post">
-    {% csrf_token %}
-    <input type="text" placeholder="Username" name="username" maxlength="20" required>
-    <input type="text" placeholder="Password" name="password" maxlength="20" required>
-    <br><br>
-    <button type="submit">Login</button>
-  </form>
-
-</div>
+  {% if posts_by_year %}
+    {% for post in posts_by_year %}
+      <p>
+        <a href="{{post.slug}}"> {{post.title}} </a>
+      </p>
+    {% endfor %}
+  {% endif %}
 {% endblock %}

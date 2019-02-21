@@ -10,5 +10,8 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('about', views.about, name='about'),
 
+    path('<int:year>', views.yearly_archive, name='yearly_archive'),
+    path('<int:year>/<slug:month>', views.monthly_archive, name='monthly_archive'),
+    
     path('<slug:slug>', views.entry, name="entry"),
 ]

@@ -20,13 +20,7 @@
 {% block content %}
 <div class="center">
 
-  <form action="{% url 'login_submit' %}" method="post">
-    {% csrf_token %}
-    <input type="text" placeholder="Username" name="username" maxlength="20" required>
-    <input type="text" placeholder="Password" name="password" maxlength="20" required>
-    <br><br>
-    <button type="submit">Login</button>
-  </form>
+  <h1>Monthly Archive</h1>
 
 </div>
 {% endblock %}

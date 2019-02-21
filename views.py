@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 
+import calendar
+
 from .models import Entry
 
 """
@@ -21,9 +23,24 @@ from .models import Entry
         false: redirect to login page
 
 """
+def yearly_archive(request, year):
+
+    query = "select * from blog_entry where EXTRACT(YEAR FROM created) = " + str(year) +";"
+    yearly_posts = Entry.objects.raw(query)
+
+    context = {
+        "year" : year,
+        "posts_by_year": yearly_posts
+    }
+
+    return render(request, 'blog/yearly_archive.html', context)
+
+def monthly_archive(request, month, year):
+    return render(request, 'blog/monthly_archive.html')
 
 def entry(request, slug):
     entry = Entry.objects.filter(slug=slug)[0]
+
     context = {
         "userIsLoggedIn" : request.user.is_authenticated,
         "entry" : {
@@ -46,9 +63,30 @@ def index(request):
 
     blog_list = Entry.objects.all().order_by('-created')
 
+
+
+    # trying to get info about how many posts there were per year
+    # and then count by month in each year.
+    # TO DO: update query to get the by month count
+    query = 'SELECT DISTINCT( \
+              EXTRACT(YEAR FROM created), EXTRACT(MONTH FROM created)) as item, \
+              null as id \
+             FROM blog_entry'
+
+    archive_info = [{'2018':[],'2019':[]}]
+    dates = Entry.objects.raw(query)
+
+    for date in dates:
+        # ex: archive = [{'2018':['November','December'], '2019':['January']}]
+        archive = date.item.strip("(").strip(")").split(",")
+        year = str(archive[0])
+        month = calendar.month_name[int(archive[1])]
+        archive_info[0][year].append(month)
+
     context = {
         "userIsLoggedIn" : request.user.is_authenticated,
-        "blog_list" : blog_list
+        "blog_list" : blog_list,
+        "archive_info" : archive_info
     }
 
     return render(request, 'blog/index.html', context)
