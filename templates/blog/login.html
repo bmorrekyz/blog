@@ -4,22 +4,16 @@
 {% block head_extra %}
 <style>
   #content {
-    /* overwritten grid for aesthetic pleasure */
-    grid-column: 2 / 12;
-    grid-row: 5;
+    grid-column: 3 / 11;
+    grid-row: 3;
+    background-image: none !important;
   }
 </style>
 {% endblock %}
 
-{% block navbar %}
-    <a href="{% url 'index' %}" id="menu_" class="nav-menu left">Blog</a>
-    <a href="{% url 'about' %}" id="menu_about" class="nav-menu left">About</a>
-    <a href="{% url 'login' %}" id="menu_login" class="nav-menu right">Login</a>
-{% endblock %}
-
 {% block content %}
-<div class="center">
-
+<div class="text-center">
+  <br><br><br>
   <form action="{% url 'login_submit' %}" method="post">
     {% csrf_token %}
     <input type="text" placeholder="Username" name="username" maxlength="20" required>

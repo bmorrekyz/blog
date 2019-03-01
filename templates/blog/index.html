@@ -1,71 +1,47 @@
 ​{% extends "blog/template.html" %}
+
+{% load static %}
 {% load markup_tags %}
 
-
-{% block navbar %}
-    {% if userIsLoggedIn %}
-      <a href="{% url 'dashboard' %}" id="menu_dashboard" class="nav-menu left">Dashboard</a>
-      <a href="{% url 'about' %}" id="menu_about" class="nav-menu left">About</a>
-      <a href="{% url 'logout' %}" id="menu_logout" class="nav-menu right">Logout</a>
-    {% else %}
-      <a href="{% url 'index' %}" id="menu_" class="nav-menu left">Blog</a>
-      <a href="{% url 'about' %}" id="menu_about" class="nav-menu left">About</a>
-      <a href="{% url 'login' %}" id="menu_login" class="nav-menu right">Login</a>
-    {% endif %}
+{% block head_extra %}
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/css/index.css' %}">
 {% endblock %}
+
 
 {% block content %}
 
-{% for entry in blog_list %}
+  {% for entry in blog_list %}
+    <div class="entry padded brillant_bkg">
 
-  <h2><a href="{{entry.slug}}"> {{entry.title}} </a></h2>
+      <h2>{{entry.title}}</h2>
 
-  <h5>{{ entry.created }}</h5>
+      <h5>{{ entry.created }}</h5>
 
-  <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
+      <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
 
-  <p class="right"><a href="{{entry.slug}}">... continue reading ...</a></p>
+      <p class="right"><a href="entry/{{entry.slug}}">continue reading ...</a></p>
+      <br><br>
 
-  <br><br><br>
-{% endfor %}
+    </div>
+
+  {% endfor %}
 
 {% endblock %}
 
 {% block aside %}
+<aside id="aside" class="aside text-center">
 <div id="inner-aside" class="inner-aside padded">
-  <br>
-  <div id="search" class="center">
-    <input type="text" id="search_query" name="search_query" placeholder="search blog content" value="">
-    <input id="search_btn" type="button" value="search">
+
+  <hr>
+
+  <div id="social_media" class="social_media ">
+    <i class="fab fa-twitter-square fa-3x"></i>
+    <i class="fab fa-github-square fa-3x"></i>
+    <i class="fab fa-youtube-square fa-3x"></i>
   </div>
 
-  <div id="archive" style="padding-left:30px;">
-    <h2>Archive</h2>
-
-    <!-- TO DO: make year fetching dynamic!! don't hard code! -->
-    {% for year in archive_info %}
-
-      <h3>
-        <a href="{{2019}}">2019</a>
-      </h3>
-      {% for month in year.2019 %}
-      <p style="padding-left:10px">
-        <a href="/blog/2019/{{month}}">{{month}}</a>
-      </p>
-      {% endfor %}
-
-      <h3>
-        <a href="{{2018}}">2018</a>
-      </h3>
-      {% for month in year.2018 %}
-        <p style="padding-left:10px">
-          <a href="/blog/2018/{{month}}">{{month}}</a>
-        </p>
-      {% endfor %}
-
-    {% endfor %}
-
-  </div>
+  <hr>
 
 </div>
+</aside>
 {% endblock %}

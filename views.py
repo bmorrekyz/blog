@@ -23,17 +23,45 @@ from .models import Entry
         false: redirect to login page
 
 """
+
+def archive(request):
+
+    # trying to get info about how many posts there were per year
+    # and then count by month in each year.
+    # TO DO: update query to get the by month count
+    query = 'SELECT DISTINCT( \
+              EXTRACT(YEAR FROM created), EXTRACT(MONTH FROM created)) as item, \
+              null as id \
+             FROM blog_entry'
+
+    archive_info = [{'2018':[],'2019':[]}]
+    dates = Entry.objects.raw(query)
+
+    for date in dates:
+        # ex: archive = [{'2018':['November','December'], '2019':['January']}]
+        archive = date.item.strip("(").strip(")").split(",")
+        year = str(archive[0])
+        month = calendar.month_name[int(archive[1])]
+        archive_info[0][year].append(month)
+
+    context = {
+        "userIsLoggedIn" : request.user.is_authenticated,
+        "archive_info" : archive_info
+    }
+    return render(request, 'blog/archive/archive.html', context)
+
 def yearly_archive(request, year):
 
     query = "select * from blog_entry where EXTRACT(YEAR FROM created) = " + str(year) + ";"
     yearly_posts = Entry.objects.raw(query)
 
     context = {
+        "userIsLoggedIn" : request.user.is_authenticated,
         "year" : year,
         "posts_by_year": yearly_posts
     }
 
-    return render(request, 'blog/yearly_archive.html', context)
+    return render(request, 'blog/archive/yearly_archive.html', context)
 
 def monthly_archive(request, year, month):
 
@@ -44,11 +72,12 @@ def monthly_archive(request, year, month):
     posts = Entry.objects.raw(query)
 
     context = {
+        "userIsLoggedIn" : request.user.is_authenticated,
         "month" : month,
         "year" : year,
         "posts" : posts
     }
-    return render(request, 'blog/monthly_archive.html',context)
+    return render(request, 'blog/archive/monthly_archive.html',context)
 
 def entry(request, slug):
     entry = Entry.objects.filter(slug=slug)[0]
@@ -75,30 +104,9 @@ def index(request):
 
     blog_list = Entry.objects.all().order_by('-created')
 
-
-
-    # trying to get info about how many posts there were per year
-    # and then count by month in each year.
-    # TO DO: update query to get the by month count
-    query = 'SELECT DISTINCT( \
-              EXTRACT(YEAR FROM created), EXTRACT(MONTH FROM created)) as item, \
-              null as id \
-             FROM blog_entry'
-
-    archive_info = [{'2018':[],'2019':[]}]
-    dates = Entry.objects.raw(query)
-
-    for date in dates:
-        # ex: archive = [{'2018':['November','December'], '2019':['January']}]
-        archive = date.item.strip("(").strip(")").split(",")
-        year = str(archive[0])
-        month = calendar.month_name[int(archive[1])]
-        archive_info[0][year].append(month)
-
     context = {
         "userIsLoggedIn" : request.user.is_authenticated,
-        "blog_list" : blog_list,
-        "archive_info" : archive_info
+        "blog_list" : blog_list
     }
 
     return render(request, 'blog/index.html', context)
@@ -106,13 +114,19 @@ def index(request):
 
 def dashboard(request):
     if request.user.is_authenticated:
-        return render(request, 'blog/dashboard.html')
+        context = {
+            "userIsLoggedIn" : request.user.is_authenticated
+        }
+        return render(request, 'blog/dashboard.html', context)
     else:
         return redirect('index')
 
 
 def login(request):
-    return render(request, 'blog/login.html')
+    context = {
+        "userIsLoggedIn" : request.user.is_authenticated
+    }
+    return render(request, 'blog/login.html', context)
 
 
 def login_submit(request):

@@ -6,25 +6,19 @@
   #content {
     /* overwritten grid for aesthetic pleasure */
     grid-column: 2 / 12;
-    grid-row: 5;
+    grid-row: 3;
   }
 </style>
 {% endblock %}
 
-{% block navbar %}
-    <a href="{% url 'index' %}" id="menu_" class="nav-menu left">Blog</a>
-    <a href="{% url 'about' %}" id="menu_about" class="nav-menu left">About</a>
-    <a href="{% url 'login' %}" id="menu_login" class="nav-menu right">Login</a>
-{% endblock %}
-
 {% block content %}
-<div class="center">
+<div class="text-center">
 
   <h1>{{ month }} {{ year }} Archive </h1>
   {% if posts %}
     {% for post in posts %}
       <p>
-        <a href="/blog/{{post.slug}}"> {{post.title}} </a>
+        <a href="/blog/entry/{{post.slug}}"> {{post.title}} </a>
       </p>
     {% endfor %}
   {% endif %}

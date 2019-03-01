@@ -10,9 +10,9 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('about', views.about, name='about'),
 
-    path('<int:year>', views.yearly_archive, name='yearly_archive'),
-    path('<int:year>/<slug:month>', views.monthly_archive, name='monthly_archive'),
-    # path('<int:year>/<slug:slug>', views.monthly_archive, name='monthly_archive'),
+    path('archive', views.archive, name='archive'),
+    path('archive/<int:year>', views.yearly_archive, name='yearly_archive'),
+    path('archive/<int:year>/<slug:month>', views.monthly_archive, name='monthly_archive'),
 
-    path('<slug:slug>', views.entry, name="entry"),
+    path('entry/<slug:slug>', views.entry, name="entry"),
 ]

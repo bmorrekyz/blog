@@ -5,8 +5,14 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
 	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/template_layout.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/template_style.css' %}">
+
 
 	<script
 				  src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -16,49 +22,57 @@
 	{% block head_extra %}{% endblock %}
 </head>
 
-<body id="main-container">
+<body id="main-container" class="main-container birds_bkg">
 
-	<header id="header" class="header">
-		<h2>Dinara Sagitova</h2>
-		<p>Some Catchy Line Goes Here...</p>
+	<header id="header" class="header text-center birds_bkg">
+		<h2>yet another blog on programming</h2>
 	</header>
 
-	<navbar id="navbar" class="navbar">
+	<navbar id="navbar" class="navbar birds_bkg">
+		{% if userIsLoggedIn %}
+			<a href="{% url 'dashboard' %}" id="menu_dashboard" class="nav-menu left">dashboard</a>
+			<a href="{% url 'logout' %}" id="menu_logout" class="nav-menu right">logout</a>
+		{% else %}
+			<a href="{% url 'login' %}" id="menu_login" class="nav-menu right">login</a>
+		{% endif %}
+
+		<a href="{% url 'index' %}" id="menu_" class="nav-menu left">blog</a>
+		<a href="{% url 'archive' %}" id="menu_archive" class="nav-menu left">archive</a>
+		<a href="{% url 'about' %}" id="menu_about" class="nav-menu left">about</a>
+
 		{% block navbar %}{% endblock %}
 	</navbar>
 
-	<article id="content" class="padded">
+
+	<article id="content" class="content brillant_bkg">
 	  {% block content %}{% endblock %}
 	</article>
 
-	<aside id="aside">
-	 		{% block aside %}{% endblock %}
-	</aside>
+	{% block aside %}{% endblock %}
 
 <script>
 
 $(document).ready(function() {
 
   // hide navbar onscroll
-  let topOffset = $('#navbar')['0']['offsetTop'];
+  const offsetTop = $('#navbar')['0']['offsetTop'];
   window.onscroll = () => {
     let el = $('#navbar');
-    (window.pageYOffset >= topOffset) ? el.addClass("fixed-top") : el.removeClass("fixed-top");
+    (window.pageYOffset >= offsetTop) ? el.addClass("fixed-top") : el.removeClass("fixed-top");
   };
 
-	// highlight menu for the current page
-	let current_url = location.href;
-	if (current_url.includes("localhost")) { var start_pos = 27; }
-	else if (current_url.includes("dinarasagitova.com")){ var start_pos = 31; }
-
-	let selected_menu = current_url.substring(start_pos,current_url.length);
-	if ($('#menu_'+selected_menu)[0] !== undefined) {
-		$('#menu_'+selected_menu).css({'color':'#C4A000'});
-	} else {
-		// so that entry view highlights the "Blog" link
-		$('#menu_').css({'color':'#C4A000'});
-	}
+	setActiveTab();
 });
+
+// highlight menu for the current page
+function setActiveTab() {
+
+	let curr_page = location.pathname.split('/')[2];
+	if (curr_page !== undefined) {
+			curr_page = (curr_page == "entry") ? "" : curr_page;
+			$('#menu_'+curr_page).addClass("active-tab");
+	}
+}
 
 </script>
 
