@@ -7,22 +7,25 @@ import calendar
 
 from .models import Entry
 
-"""
-    authentication scenario draft 1
-    1. user opens homepage (blog/index.html)
-        if user is already logged in:
-        true: homepage has "dashboard" and "logout" links
-        false: homepage has "login" link
+def login(request):
+    context = { "userIsLoggedIn" : request.user.is_authenticated }
+    return render(request, 'blog/login.html', context)
 
-    2. user clicks on login link
-    3. system opens login page where login form is presented to the user
+def login_submit(request):
 
-    4. user enters login info and clicks submit
-        if system verified these user credentials:
-        true: redirect user back to the homepage where "dashboard", "logout" links will be shown
-        false: redirect to login page
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
 
-"""
+    if user is not None:
+        auth_login(request, user)
+        return redirect('index')
+    else:
+        return redirect('login')
+
+def logout(request):
+    auth_logout(request)
+    return redirect('index')
 
 def archive(request):
 
@@ -52,7 +55,9 @@ def archive(request):
 
 def yearly_archive(request, year):
 
-    query = "select * from blog_entry where EXTRACT(YEAR FROM created) = " + str(year) + ";"
+    query = "select * from blog_entry \
+            where EXTRACT(YEAR FROM created) = {} ;".format(year)
+
     yearly_posts = Entry.objects.raw(query)
 
     context = {
@@ -65,9 +70,9 @@ def yearly_archive(request, year):
 
 def monthly_archive(request, year, month):
 
-    query = "select * from blog_entry where EXTRACT(MONTH FROM created) =  \
-             EXTRACT(MONTH FROM to_date('" + month + "', 'Month')) \
-             AND EXTRACT(YEAR FROM created) = " + str(year) + ";"
+    query = "SELECT * FROM blog_entry WHERE \
+            EXTRACT(MONTH FROM created) = EXTRACT(MONTH FROM to_date('{}', 'Month')) \
+            AND EXTRACT(YEAR FROM created) = {} ;".format(month, year)
 
     posts = Entry.objects.raw(query)
 
@@ -95,9 +100,7 @@ def entry(request, slug):
 
 
 def about(request):
-    context = {
-        "userIsLoggedIn" : request.user.is_authenticated
-    }
+    context = { "userIsLoggedIn" : request.user.is_authenticated }
     return render(request, 'blog/about.html', context)
 
 def index(request):
@@ -114,34 +117,7 @@ def index(request):
 
 def dashboard(request):
     if request.user.is_authenticated:
-        context = {
-            "userIsLoggedIn" : request.user.is_authenticated
-        }
+        context = { "userIsLoggedIn" : request.user.is_authenticated }
         return render(request, 'blog/dashboard.html', context)
     else:
         return redirect('index')
-
-
-def login(request):
-    context = {
-        "userIsLoggedIn" : request.user.is_authenticated
-    }
-    return render(request, 'blog/login.html', context)
-
-
-def login_submit(request):
-
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-
-    if user is not None:
-        auth_login(request, user)
-        return redirect('index')
-    else:
-        return redirect('login')
-
-
-def logout(request):
-    auth_logout(request)
-    return redirect('index')

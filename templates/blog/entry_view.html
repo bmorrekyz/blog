@@ -5,8 +5,6 @@
 {% load markup_tags %}
 
 {% block head_extra %}
-<link rel="stylesheet" type="text/css" href="{% static 'blog/css/index.css' %}">
-
 <style>
   #content {
     grid-column: 2 / 12;
@@ -16,17 +14,41 @@
 {% endblock %}
 
 {% block content %}
-<div class="entry padded">
+
+<div class="entry padded brillant_bkg">
 
   {% if entry %}
     <h2>{{ entry.title }}</h2>
     <h5>{{ entry.created }}</h5>
     <p>{{ entry.body|apply_markup:entry.markup }}</p>
+    
     <br><br><br>
 
   {% else %}
-    <h2>Error: could not get this blog entry</h2>
+    <h2>This post no longer exists.</h2>
   {% endif %}
-
 </div>
+
+<div id="disqus_thread" class="entry padded brillant_bkg"></div>
+
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://dinarasagitova.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
 {% endblock %}

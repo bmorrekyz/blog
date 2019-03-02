@@ -22,13 +22,13 @@
 	{% block head_extra %}{% endblock %}
 </head>
 
-<body id="main-container" class="main-container birds_bkg">
+<body class="main_bk">
 
-	<header id="header" class="header text-center birds_bkg">
-		<h2>yet another blog on programming</h2>
+	<header class="header main_bk">
+		<h2>yet another programming blog</h2>
 	</header>
 
-	<navbar id="navbar" class="navbar birds_bkg">
+	<navbar id="navbar" class="navbar main_bk">
 		{% if userIsLoggedIn %}
 			<a href="{% url 'dashboard' %}" id="menu_dashboard" class="nav-menu left">dashboard</a>
 			<a href="{% url 'logout' %}" id="menu_logout" class="nav-menu right">logout</a>
@@ -44,7 +44,7 @@
 	</navbar>
 
 
-	<article id="content" class="content brillant_bkg">
+	<article id="content" class="content ">
 	  {% block content %}{% endblock %}
 	</article>
 
@@ -75,6 +75,8 @@ function setActiveTab() {
 }
 
 </script>
+
+<script id="dsq-count-scr" src="//dinarasagitova.disqus.com/count.js" async></script>
 
 {% block script_extra %}{% endblock %}
 

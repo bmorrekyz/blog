@@ -1,6 +1,6 @@
 /* mobile first */
 
-#main-container {
+body {
     display: grid;
     grid-template-columns: repeat(12, minmax(0,1fr));
     grid-gap: 10px;
@@ -8,18 +8,18 @@
     padding: 0 auto;
 }
 
-#header {
+header {
   grid-column: 1 / 13;
   grid-row: 1;
 }
 
-#navbar {
+navbar {
     grid-column: 1 / 13;
     grid-row: 2;
 }
 
-#content {
-    /* 12 cols on mobile, 9 on screen size > 785px */
+article {
+    /* 10 cols on mobile */
     grid-column: 2 / 12;
     grid-row: 3;
 }
@@ -27,7 +27,6 @@
 #aside {
     grid-column: 10 / 12;
     grid-row: 3;
-    display: none;
 }
 
 #aside, #inner-aside { display: none; }
@@ -36,7 +35,7 @@
 /* desktop view */
 @media screen and (min-width: 1000px) {
 
-  #content { grid-column: 2 / 10; }
+  article { grid-column: 2 / 10; }
   #aside, #inner-aside { display: block; }
 
 }

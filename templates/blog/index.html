@@ -3,45 +3,42 @@
 {% load static %}
 {% load markup_tags %}
 
-{% block head_extra %}
-  <link rel="stylesheet" type="text/css" href="{% static 'blog/css/index.css' %}">
-{% endblock %}
-
-
 {% block content %}
 
   {% for entry in blog_list %}
-    <div class="entry padded brillant_bkg">
+  <div class="entry padded brillant_bkg">
+    <h4>{{entry.title|upper}}</h4>
+    <h5>{{ entry.created }} - <a href="entry/{{entry.slug}}#disqus_thread"></a></h5>
 
-      <h2>{{entry.title}}</h2>
+    <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
 
-      <h5>{{ entry.created }}</h5>
+    <p class="right"><a href="entry/{{entry.slug}}">continue reading ...</a></p>
+    <br><br>
 
-      <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
-
-      <p class="right"><a href="entry/{{entry.slug}}">continue reading ...</a></p>
-      <br><br>
-
-    </div>
-
+  </div>
   {% endfor %}
 
 {% endblock %}
 
 {% block aside %}
 <aside id="aside" class="aside text-center">
-<div id="inner-aside" class="inner-aside padded">
+  <div id="inner-aside" class="inner-aside padded">
 
-  <hr>
+    <hr>
 
-  <div id="social_media" class="social_media ">
-    <i class="fab fa-twitter-square fa-3x"></i>
-    <i class="fab fa-github-square fa-3x"></i>
-    <i class="fab fa-youtube-square fa-3x"></i>
+    <div id="social_media">
+      <p>connect with me on</p>
+      <a href="https://twitter.com/bmorreliving" target="_blank">
+        <i class="fab fa-twitter-square fa-3x">
+        </i>
+      </a>
+      <a href="https://github.com/bmorrekyz" target="_blank">
+        <i class="fab fa-github-square fa-3x"></i>
+      </a>
+    </div>
+
+    <hr>
+
   </div>
-
-  <hr>
-
-</div>
 </aside>
 {% endblock %}
