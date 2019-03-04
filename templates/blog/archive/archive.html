@@ -58,6 +58,10 @@ ul { list-style-type: none; margin:0;}
 {% block script_extra %}
 <script type="text/javascript">
 
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
   let archive = '{{archive}}'.replace(/&quot;/g, '"');
   archive = JSON.parse(archive)
 
@@ -75,7 +79,7 @@ ul { list-style-type: none; margin:0;}
       month_node.attr("id", "month_"+month).css("display","block").removeClass("month");
       $("#year_"+year + " > ul.nested").append(month_node);
 
-      $('#month_'+month +" > span.caret").text(month);
+      $('#month_'+month +" > span.caret").text(monthNames[month-1]);
 
       // for posts in month
       for (let i = 0; i < archive[year][month].length; i++ )
@@ -95,5 +99,6 @@ ul { list-style-type: none; margin:0;}
       this.classList.toggle("caret-down");
     });
   }
+
 </script>
 {% endblock %}
