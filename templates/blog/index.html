@@ -7,16 +7,19 @@
 
   {% for entry in blog_list %}
   <div class="entry padded brillant_bkg">
+
     <h4>{{entry.title|upper}}</h4>
-    <p>
+    
+    <h5>
       {{entry.pub_month}}/{{entry.pub_day}}/{{entry.pub_year}}
       -
       <a href="entry/{{entry.slug}}#disqus_thread"></a>
-    </p>
+    </h5>
 
     <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
 
-    <p class="right"><a href="entry/{{entry.slug}}">CONTINUE READING...</a></p>
+    <h5 class="right"><a href="entry/{{entry.slug}}">CONTINUE READING...</a></h5>
+
     <br><br>
 
   </div>

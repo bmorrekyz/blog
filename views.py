@@ -8,9 +8,6 @@ import json
 
 from .models import Entry
 
-def login(request):
-    context = { "userIsLoggedIn" : request.user.is_authenticated }
-    return render(request, 'blog/login.html', context)
 
 def login_submit(request):
 
@@ -20,9 +17,8 @@ def login_submit(request):
 
     if user is not None:
         auth_login(request, user)
-        return redirect('index')
-    else:
-        return redirect('login')
+
+    return redirect('index')
 
 def logout(request):
     auth_logout(request)
@@ -61,7 +57,7 @@ def index(request):
     }
 
     return render(request, 'blog/index.html', context)
-    
+
 def entry(request, slug):
     entry = Entry.objects.filter(slug=slug)[0]
 

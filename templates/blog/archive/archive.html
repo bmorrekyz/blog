@@ -2,28 +2,32 @@
 {% block head_extra %}
 <style>
 
-/* Remove default bullets */
-ul { list-style-type: none; margin:0;}
+  /* Remove default bullets */
+  ul {
+     list-style-type: none;
+     margin:0;
+  }
 
-/* Remove margins and padding from the parent ul */
-#archive_container > ul, #archive { margin: 0;  padding: 0; }
+  #archive_container > ul, #archive {
+    margin: 0;
+    padding: 0;
+  }
 
-.caret { cursor: pointer; }
+  .caret { cursor: pointer; }
 
-/* Create the caret/arrow with a unicode, and style it */
-.caret::before {
- content: "\25B6";
- display: inline-block;
-}
+  /* Create the caret/arrow with a unicode, and style it */
+  .caret::before {
+   content: "\25B6";
+   display: inline-block;
+  }
 
-/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
-.caret-down::before { transform: rotate(90deg); }
+  /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+  .caret-down::before { transform: rotate(90deg); }
 
-/* Hide the nested list */
-.nested { display: none; }
+  .nested { display: none; }
 
-/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-.active { display: block; }
+  /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+  .active { display: block; }
 
 </style>
 {% endblock %}
@@ -32,6 +36,13 @@ ul { list-style-type: none; margin:0;}
 <div id="archive_container">
 
   {% if archive %}
+  <!-- archive template. rendered using JS -->
+  <ul>
+    <li><span class="caret">Archive</span>
+      <ul id="archive" class="nested"></ul>
+    </li>
+  </ul>
+
   <!-- archive year tab template. rendered using JS -->
   <li style="display:none;" class="year">
     <span class="caret">0000</span>
@@ -44,12 +55,6 @@ ul { list-style-type: none; margin:0;}
     <ul class="nested"></ul>
   </li>
 
-  <!-- archive template. rendered using JS -->
-  <ul>
-    <li><span class="caret">Archive</span>
-      <ul id="archive" class="nested"></ul>
-    </li>
-  </ul>
   {% endif %}
 
 </div>
@@ -62,8 +67,7 @@ ul { list-style-type: none; margin:0;}
     "July", "August", "September", "October", "November", "December"
   ];
 
-  let archive = '{{archive}}'.replace(/&quot;/g, '"');
-  archive = JSON.parse(archive)
+  let archive = JSON.parse('{{archive}}'.replace(/&quot;/g, '"'));
 
   for (year in archive)
   {
@@ -82,11 +86,12 @@ ul { list-style-type: none; margin:0;}
       $('#month_'+month +" > span.caret").text(monthNames[month-1]);
 
       // for posts in month
-      for (let i = 0; i < archive[year][month].length; i++ )
+      for (let post = 0; post < archive[year][month].length; post++ )
       {
-        let title = archive[year][month][i]["title"];
-        let slug = archive[year][month][i]["slug"];
+        let title = archive[year][month][post]["title"];
+        let slug = archive[year][month][post]["slug"];
         let link = `<a href="entry/${slug}">- ${title}</a>`;
+
         $("#year_"+year+" #month_"+month+" ul").append("<li>"+link+"</li>");
       }
     }

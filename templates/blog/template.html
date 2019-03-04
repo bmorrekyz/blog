@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
@@ -29,16 +29,31 @@
 	</header>
 
 	<navbar id="navbar" class="navbar main_bk">
-		{% if userIsLoggedIn %}
+
+		<div>
+			{% if userIsLoggedIn %}
 			<a href="{% url 'dashboard' %}" id="menu_dashboard" class="nav-menu left">dashboard</a>
 			<a href="{% url 'logout' %}" id="menu_logout" class="nav-menu right">logout</a>
-		{% else %}
-			<a href="{% url 'login' %}" id="menu_login" class="nav-menu right">login</a>
-		{% endif %}
+			{% else %}
+			<a id="menu_login" class="nav-menu right">login</a>
+			{% endif %}
 
-		<a href="{% url 'index' %}" id="menu_" class="nav-menu left">blog</a>
-		<!-- <a href="{% url 'archive' %}" id="menu_archive" class="nav-menu left">archive</a> -->
-		<a href="{% url 'about' %}" id="menu_about" class="nav-menu left">about</a>
+			<a href="{% url 'index' %}" id="menu_" class="nav-menu left">blog</a>
+			<!-- <a href="{% url 'archive' %}" id="menu_archive" class="nav-menu left">archive</a> -->
+			<a href="{% url 'about' %}" id="menu_about" class="nav-menu left">about</a>
+		</div>
+
+		{% if not userIsLoggedIn %}
+		<br><br>
+		<div id="login_form" style="display:none;" class="right">
+			<form action="{% url 'login_submit' %}" method="post">
+		    {% csrf_token %}
+		    <input type="text" placeholder="Username" name="username" maxlength="20" required>
+		    <input type="text" placeholder="Password" name="password" maxlength="20" required>
+		    <button type="submit">Login</button>
+		  </form>
+		</div>
+		{% endif %}
 
 		{% block navbar %}{% endblock %}
 	</navbar>
@@ -66,7 +81,6 @@ $(document).ready(function() {
 
 // highlight menu for the current page
 function setActiveTab() {
-
 	let curr_page = location.pathname.split('/')[2];
 	if (curr_page !== undefined) {
 			curr_page = (curr_page == "entry") ? "" : curr_page;
@@ -74,6 +88,13 @@ function setActiveTab() {
 	}
 }
 
+let menu_login = document.getElementById("menu_login");
+if (menu_login !== null) {
+	menu_login.addEventListener("click", function(e) {
+		e.preventDefault();
+		$("#login_form").toggle();
+	})
+}
 </script>
 
 {% block script_extra %}{% endblock %}
