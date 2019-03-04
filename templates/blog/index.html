@@ -76,7 +76,25 @@
     </div>
 
     <hr>
+
     {% include "./includes/archive.html" %}
+
+    <hr>
+
+    <div id="tag_count">
+      <p><b>Labels</b></p>
+
+      {% if tag_count %}
+        {% for tag in tag_count %}
+          <span>
+            <a href="" style="color:#003366 !important;">{{tag.tag_full}}</a>
+            ({{tag.num}})
+          </span>
+        {% endfor %}
+      {% endif %}
+
+    </div>
+
     <hr>
   </div>
 </aside>

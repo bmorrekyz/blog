@@ -7,7 +7,7 @@ import calendar
 import json
 
 from .models import Entry
-
+from .models import BlogEntryTag, Tag
 
 def login_submit(request):
 
@@ -26,7 +26,7 @@ def logout(request):
 
 def index(request):
 
-    query = "SELECT BE.id, BE.title, BE.body, BE.slug, BE.markup, BT.tag, \
+    get_entries_query = "SELECT BE.id, BE.title, BE.body, BE.slug, BE.markup, BT.tag, \
                 EXTRACT(YEAR FROM BE.created)::SMALLINT as pub_year, \
                 EXTRACT(MONTH FROM BE.created)::SMALLINT as pub_month, \
                 EXTRACT(DAY FROM BE.created)::SMALLINT as pub_day \
@@ -37,7 +37,7 @@ def index(request):
             	AND BET.tag_id=BT.id \
             ORDER BY BE.created desc;"
 
-    blog_list = Entry.objects.raw(query)
+    blog_list = Entry.objects.raw(get_entries_query)
 
     archive = {}
 
@@ -52,10 +52,21 @@ def index(request):
 
         archive[b.pub_year][b.pub_month].append(post)
 
+    # get tag count
+    tag_count_query = "SELECT BT.id, BT.tag, BT.tag_full, COUNT(*) AS num \
+            FROM blog_blogentrytag AS BET, blog_tag AS BT \
+            WHERE BET.tag_id=BT.id \
+            GROUP BY BT.id, BT.tag;"
+
+    tag_count = Tag.objects.raw(tag_count_query)
+    for tag in tag_count:
+        print(tag.num)
+
     context = {
         "userIsLoggedIn" : request.user.is_authenticated,
         "blog_list" : blog_list,
-        "archive" : json.dumps(archive)
+        "archive" : json.dumps(archive),
+        "tag_count" : tag_count
     }
 
     return render(request, 'blog/index.html', context)
