@@ -3,24 +3,53 @@
 {% load static %}
 {% load markup_tags %}
 
+{% block head_extra %}
+  <style>
+    .date {
+      float: left;
+      /* width: 50px; */
+      text-align: center;
+      font-weight: bold;
+      color: #46edde;
+      margin-right: 15px;
+    }
+    .date .month  {
+      font-size: 1.7em;
+    }
+    .date .year  {
+      font-size: 1.2em;
+    }
+    .date .day {
+      font-size: 2.2em;
+      color: #3de6d7;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
 
   {% for entry in blog_list %}
   <div class="entry padded brillant_bkg">
 
+    <div class="date">
+      <span class="month">{{entry.pub_month}}</span>
+      <span class="day">{{entry.pub_day}}</span>
+      <span class="year">{{entry.pub_year}}</span>
+    </div>
+
     <h4>{{entry.title|upper}}</h4>
-
-    <h5>
-      {{entry.pub_month}}/{{entry.pub_day}}/{{entry.pub_year}}
-      -
-      <a href="entry/{{entry.slug}}#disqus_thread"></a>
-    </h5>
-
-    <p>tags: <b>{{entry.tag}}</b></p>
+    <div>
+      <h5>
+        Published by <em>Dinara Sagitova</em> in <em>{{entry.tag}}</em> -
+        <a href="entry/{{entry.slug}}#disqus_thread"></a>
+      </h5>
+    </div>
 
     <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
 
-    <h5 class="right"><a href="entry/{{entry.slug}}">CONTINUE READING...</a></h5>
+    <h5 class="right">
+      <a href="entry/{{entry.slug}}">CONTINUE READING...</a>
+    </h5>
 
     <br><br>
 
@@ -47,7 +76,7 @@
     </div>
 
     <hr>
-    {% include "./archive/archive.html" %}
+    {% include "./includes/archive.html" %}
     <hr>
   </div>
 </aside>

@@ -68,14 +68,14 @@
   ];
 
   let archive = JSON.parse('{{archive}}'.replace(/&quot;/g, '"'));
-
+  console.log(archive);
   for (year in archive)
   {
     let year_node = $( ".year" ).clone();
     year_node.attr("id", "year_"+year).css("display","block").removeClass("year");
     $("#archive").append(year_node);
-
     $('#year_'+year + " > span.caret").first().text(year);
+    $('span#year_'+year).css('display','none');
 
     for (month in archive[year])
     {
@@ -84,7 +84,7 @@
       $("#year_"+year + " > ul.nested").append(month_node);
 
       $('#month_'+month +" > span.caret").text(monthNames[month-1]);
-
+      $('span#month_'+month).css('display','none');
       // for posts in month
       for (let post = 0; post < archive[year][month].length; post++ )
       {

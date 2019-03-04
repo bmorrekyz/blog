@@ -25,15 +25,6 @@ def logout(request):
     return redirect('index')
 
 def index(request):
-    #
-    # query = "select \
-    #             id, title, body, slug, markup, \
-    #             EXTRACT(YEAR FROM created)::SMALLINT as pub_year, \
-    #             EXTRACT(MONTH FROM created)::SMALLINT as pub_month, \
-    #             EXTRACT(DAY FROM created)::SMALLINT as pub_day \
-    #         from blog_entry \
-    #         where publish=True \
-    #         order by created desc;"
 
     query = "SELECT BE.id, BE.title, BE.body, BE.slug, BE.markup, BT.tag, \
                 EXTRACT(YEAR FROM BE.created)::SMALLINT as pub_year, \
@@ -43,7 +34,8 @@ def index(request):
             WHERE \
             	BE.publish=True \
             	AND BE.id=BET.blog_entry_id \
-            	AND BET.tag_id=BT.id;"
+            	AND BET.tag_id=BT.id \
+            ORDER BY BE.created desc;"
 
     blog_list = Entry.objects.raw(query)
 
@@ -84,7 +76,7 @@ def entry(request, slug):
 
 
 def archive(request):
-    return render(request, 'blog/archive/archive.html')
+    return render(request, 'blog/includes/archive.html')
 
 def about(request):
     context = { "userIsLoggedIn" : request.user.is_authenticated }
