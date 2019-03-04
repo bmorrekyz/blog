@@ -37,7 +37,7 @@
 		{% endif %}
 
 		<a href="{% url 'index' %}" id="menu_" class="nav-menu left">blog</a>
-		<a href="{% url 'archive' %}" id="menu_archive" class="nav-menu left">archive</a>
+		<!-- <a href="{% url 'archive' %}" id="menu_archive" class="nav-menu left">archive</a> -->
 		<a href="{% url 'about' %}" id="menu_about" class="nav-menu left">about</a>
 
 		{% block navbar %}{% endblock %}
@@ -75,8 +75,6 @@ function setActiveTab() {
 }
 
 </script>
-
-<script id="dsq-count-scr" src="//dinarasagitova.disqus.com/count.js" async></script>
 
 {% block script_extra %}{% endblock %}
 

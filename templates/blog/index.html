@@ -8,11 +8,12 @@
   {% for entry in blog_list %}
   <div class="entry padded brillant_bkg">
     <h4>{{entry.title|upper}}</h4>
-    <h5>{{ entry.created }} - <a href="entry/{{entry.slug}}#disqus_thread"></a></h5>
+    <p><small>{{entry.pub_month}}/{{entry.pub_day}}/{{entry.pub_year}}</small></p>
+    <p><small><a href="entry/{{entry.slug}}#disqus_thread"></a></small></p>
 
     <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
 
-    <p class="right"><a href="entry/{{entry.slug}}">continue reading ...</a></p>
+    <p class="right"><a href="entry/{{entry.slug}}">CONTINUE READING...</a></p>
     <br><br>
 
   </div>
@@ -21,12 +22,12 @@
 {% endblock %}
 
 {% block aside %}
-<aside id="aside" class="aside text-center">
+<aside id="aside" class="aside">
   <div id="inner-aside" class="inner-aside padded">
 
     <hr>
 
-    <div id="social_media">
+    <div id="social_media" class="text-center">
       <p>connect with me on</p>
       <a href="https://twitter.com/bmorreliving" target="_blank">
         <i class="fab fa-twitter-square fa-3x">
@@ -38,7 +39,8 @@
     </div>
 
     <hr>
-
+    {% include "./archive/archive.html" %}
+    <hr>
   </div>
 </aside>
 {% endblock %}

@@ -4,6 +4,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 
 import calendar
+import json
 
 from .models import Entry
 
@@ -27,63 +28,40 @@ def logout(request):
     auth_logout(request)
     return redirect('index')
 
-def archive(request):
+def index(request):
 
-    # trying to get info about how many posts there were per year
-    # and then count by month in each year.
-    # TO DO: update query to get the by month count
-    query = 'SELECT DISTINCT( \
-              EXTRACT(YEAR FROM created), EXTRACT(MONTH FROM created)) as item, \
-              null as id \
-             FROM blog_entry'
+    query = "select \
+                id, title, body, slug, markup, \
+                EXTRACT(YEAR FROM created)::SMALLINT as pub_year, \
+                EXTRACT(MONTH FROM created)::SMALLINT as pub_month, \
+                EXTRACT(DAY FROM created)::SMALLINT as pub_day \
+            from blog_entry \
+            where publish=True \
+            order by created desc;"
 
-    archive_info = [{'2018':[],'2019':[]}]
-    dates = Entry.objects.raw(query)
+    blog_list = Entry.objects.raw(query)
 
-    for date in dates:
-        # ex: archive = [{'2018':['November','December'], '2019':['January']}]
-        archive = date.item.strip("(").strip(")").split(",")
-        year = str(archive[0])
-        month = calendar.month_name[int(archive[1])]
-        archive_info[0][year].append(month)
+    archive = {}
 
-    context = {
-        "userIsLoggedIn" : request.user.is_authenticated,
-        "archive_info" : archive_info
-    }
-    return render(request, 'blog/archive/archive.html', context)
+    for b in blog_list:
+        post = {'title':b.title, 'slug':b.slug}
+        if b.pub_year not in archive:
+            archive[b.pub_year] = {}
+            archive[b.pub_year][b.pub_month] = []
+        else:
+            if b.pub_month not in archive[b.pub_year]:
+                archive[b.pub_year][b.pub_month] = []
 
-def yearly_archive(request, year):
-
-    query = "select * from blog_entry \
-            where EXTRACT(YEAR FROM created) = {} ;".format(year)
-
-    yearly_posts = Entry.objects.raw(query)
+        archive[b.pub_year][b.pub_month].append(post)
 
     context = {
         "userIsLoggedIn" : request.user.is_authenticated,
-        "year" : year,
-        "posts_by_year": yearly_posts
+        "blog_list" : blog_list,
+        "archive" : json.dumps(archive)
     }
 
-    return render(request, 'blog/archive/yearly_archive.html', context)
-
-def monthly_archive(request, year, month):
-
-    query = "SELECT * FROM blog_entry WHERE \
-            EXTRACT(MONTH FROM created) = EXTRACT(MONTH FROM to_date('{}', 'Month')) \
-            AND EXTRACT(YEAR FROM created) = {} ;".format(month, year)
-
-    posts = Entry.objects.raw(query)
-
-    context = {
-        "userIsLoggedIn" : request.user.is_authenticated,
-        "month" : month,
-        "year" : year,
-        "posts" : posts
-    }
-    return render(request, 'blog/archive/monthly_archive.html',context)
-
+    return render(request, 'blog/index.html', context)
+    
 def entry(request, slug):
     entry = Entry.objects.filter(slug=slug)[0]
 
@@ -99,21 +77,12 @@ def entry(request, slug):
     return render(request, 'blog/entry_view.html', context)
 
 
+def archive(request):
+    return render(request, 'blog/archive/archive.html')
+
 def about(request):
     context = { "userIsLoggedIn" : request.user.is_authenticated }
     return render(request, 'blog/about.html', context)
-
-def index(request):
-
-    blog_list = Entry.objects.all().order_by('-created')
-
-    context = {
-        "userIsLoggedIn" : request.user.is_authenticated,
-        "blog_list" : blog_list
-    }
-
-    return render(request, 'blog/index.html', context)
-
 
 def dashboard(request):
     if request.user.is_authenticated:

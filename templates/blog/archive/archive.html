@@ -1,39 +1,99 @@
 
-​{% extends "blog/template.html" %}
-
 {% block head_extra %}
 <style>
-  #content {
-    grid-column: 2 / 12;
-    grid-row: 3;
-  }
+
+/* Remove default bullets */
+ul { list-style-type: none; margin:0;}
+
+/* Remove margins and padding from the parent ul */
+#archive_container > ul, #archive { margin: 0;  padding: 0; }
+
+.caret { cursor: pointer; }
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret::before {
+ content: "\25B6";
+ display: inline-block;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-down::before { transform: rotate(90deg); }
+
+/* Hide the nested list */
+.nested { display: none; }
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active { display: block; }
+
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="text-center">
+<div id="archive_container">
 
-  <!-- TO DO: make year fetching dynamic!! don't hard code! -->
-  {% for year in archive_info %}
+  {% if archive %}
+  <!-- archive year tab template. rendered using JS -->
+  <li style="display:none;" class="year">
+    <span class="caret">0000</span>
+    <ul class="nested"></ul>
+  </li>
 
-    <h3>
-      <a href="archive/{{2019}}">2019</a>
-    </h3>
-    {% for month in year.2019 %}
-    <p style="padding-left:10px">
-      <a href="/blog/archive/2019/{{month}}">{{month}}</a>
-    </p>
-    {% endfor %}
+  <!-- archive month tab template. rendered using JS -->
+  <li style="display:none;" class="month">
+    <span class="caret">MONTH_NAME</span>
+    <ul class="nested"></ul>
+  </li>
 
-    <h3>
-      <a href="archive/{{2018}}">2018</a>
-    </h3>
-    {% for month in year.2018 %}
-      <p style="padding-left:10px">
-        <a href="/blog/archive/2018/{{month}}">{{month}}</a>
-      </p>
-    {% endfor %}
+  <!-- archive template. rendered using JS -->
+  <ul>
+    <li><span class="caret">Archive</span>
+      <ul id="archive" class="nested"></ul>
+    </li>
+  </ul>
+  {% endif %}
 
-  {% endfor %}
 </div>
+{% endblock %}
+
+{% block script_extra %}
+<script type="text/javascript">
+
+  let archive = '{{archive}}'.replace(/&quot;/g, '"');
+  archive = JSON.parse(archive)
+
+  for (year in archive)
+  {
+    let year_node = $( ".year" ).clone();
+    year_node.attr("id", "year_"+year).css("display","block").removeClass("year");
+    $("#archive").append(year_node);
+
+    $('#year_'+year + " > span.caret").first().text(year);
+
+    for (month in archive[year])
+    {
+      let month_node = $( ".month" ).clone();
+      month_node.attr("id", "month_"+month).css("display","block").removeClass("month");
+      $("#year_"+year + " > ul.nested").append(month_node);
+
+      $('#month_'+month +" > span.caret").text(month);
+
+      // for posts in month
+      for (let i = 0; i < archive[year][month].length; i++ )
+      {
+        let title = archive[year][month][i]["title"];
+        let slug = archive[year][month][i]["slug"];
+        let link = `<a href="entry/${slug}">- ${title}</a>`;
+        $("#year_"+year+" #month_"+month+" ul").append("<li>"+link+"</li>");
+      }
+    }
+  }
+
+  let toggler = document.getElementsByClassName("caret");
+  for (let i = 0; i < toggler.length; i++) {
+    toggler[i].addEventListener("click", function() {
+      this.parentElement.querySelector(".nested").classList.toggle("active");
+      this.classList.toggle("caret-down");
+    });
+  }
+</script>
 {% endblock %}

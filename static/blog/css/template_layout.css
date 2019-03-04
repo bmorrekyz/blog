@@ -25,7 +25,7 @@ article {
 }
 
 #aside {
-    grid-column: 10 / 12;
+    grid-column: 9 / 12;
     grid-row: 3;
 }
 
@@ -35,7 +35,7 @@ article {
 /* desktop view */
 @media screen and (min-width: 1000px) {
 
-  article { grid-column: 2 / 10; }
+  article { grid-column: 2 / 9; }
   #aside, #inner-aside { display: block; }
 
 }
