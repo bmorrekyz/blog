@@ -5,13 +5,14 @@
 }
 
 a {
-  color: #2a2a2f;
+  color: #00003f;
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .header {

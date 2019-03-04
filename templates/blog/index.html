@@ -7,7 +7,6 @@
   <style>
     .date {
       float: left;
-      /* width: 50px; */
       text-align: center;
       font-weight: bold;
       color: #46edde;
@@ -23,13 +22,28 @@
       font-size: 2.2em;
       color: #3de6d7;
     }
+
+    .tags {
+      padding: 2px;
+      width: 50px;
+      text-align: center;
+      text-decoration: none;
+      background: #3de6d7;
+    }
+
   </style>
 {% endblock %}
 
 {% block content %}
 
   {% for entry in blog_list %}
-  <div class="entry padded brillant_bkg">
+  <div id="filter_status" class="text-center" style="display:none;">
+    <span id="filter_text"></span>
+    <br>
+    <a id="filter_all">show all</a>
+  </div>
+
+  <div class="entry padded brillant_bkg" name="tag_{{entry.tag}}">
 
     <div class="date">
       <span class="month">{{entry.pub_month}}</span>
@@ -38,9 +52,10 @@
     </div>
 
     <h4>{{entry.title|upper}}</h4>
+
     <div>
-      <h5>
-        Published by <em>Dinara Sagitova</em> in <em>{{entry.tag}}</em> -
+      <h5>Published by Dinara Sagitova in
+        <span class="tags">{{entry.tag_full}}</span> -
         <a href="entry/{{entry.slug}}#disqus_thread"></a>
       </h5>
     </div>
@@ -81,19 +96,7 @@
 
     <hr>
 
-    <div id="tag_count">
-      <p><b>Labels</b></p>
-
-      {% if tag_count %}
-        {% for tag in tag_count %}
-          <span>
-            <a href="" style="color:#003366 !important;">{{tag.tag_full}}</a>
-            ({{tag.num}})
-          </span>
-        {% endfor %}
-      {% endif %}
-
-    </div>
+    {% include "./includes/tags.html" %}
 
     <hr>
   </div>

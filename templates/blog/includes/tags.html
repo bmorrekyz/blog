@@ -1,0 +1,66 @@
+
+{% block head_extra %}
+  <style>
+    .caps {
+      text-transform: uppercase;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+<div id="tag_count">
+  <p><b>Labels</b></p>
+
+  {% if tag_count %}
+    {% for tag in tag_count %}
+      <span>
+        <a id="tag_{{tag}}" class="tag_filter">{{tag.tag_full}}</a>
+        [{{tag.num}}] &nbsp;
+      </span>
+    {% endfor %}
+  {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block script_extra %}
+  <script type="text/javascript">
+
+    let tag_filter = document.getElementsByClassName("tag_filter");
+
+    for (let i = 0; i < tag_filter.length; i++)
+    {
+      tag_filter[i].addEventListener("click", function() {
+
+        const target_tag = this.id;
+        const target_tag_full = this.text;
+
+        $( ".entry" ).show();
+
+        // hide all entries where tag is different from the target tag
+        let entries = document.getElementsByClassName("entry");
+        for (let i = 0; i < entries.length; i++) {
+          curr_entry = entries[i].getAttribute("name");
+          if (target_tag !== curr_entry) {
+            $( "div[name='"+curr_entry+"']" ).hide();
+          }
+        }
+
+        let msg = `Showing entries with label <b class="caps">${target_tag_full}</b>`;
+        $('#filter_status').show();
+        $('#filter_text').html("").html(msg);
+
+      });
+    }
+
+    let reset_entries_view = document.getElementById("filter_all");
+    reset_entries_view.addEventListener("click", function(e) {
+      e.preventDefault();
+
+      $( ".entry" ).show();
+      $('#filter_status').hide();
+    });
+  </script>
+{% endblock %}

@@ -21,12 +21,14 @@ def login_submit(request):
     return redirect('index')
 
 def logout(request):
+
     auth_logout(request)
+
     return redirect('index')
 
 def index(request):
 
-    get_entries_query = "SELECT BE.id, BE.title, BE.body, BE.slug, BE.markup, BT.tag, \
+    get_entries_query = "SELECT BE.id, BE.title, BE.body, BE.slug, BE.markup, BT.tag, BT.tag_full, \
                 EXTRACT(YEAR FROM BE.created)::SMALLINT as pub_year, \
                 EXTRACT(MONTH FROM BE.created)::SMALLINT as pub_month, \
                 EXTRACT(DAY FROM BE.created)::SMALLINT as pub_day \
@@ -59,8 +61,6 @@ def index(request):
             GROUP BY BT.id, BT.tag;"
 
     tag_count = Tag.objects.raw(tag_count_query)
-    for tag in tag_count:
-        print(tag.num)
 
     context = {
         "userIsLoggedIn" : request.user.is_authenticated,
