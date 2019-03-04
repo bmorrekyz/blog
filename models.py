@@ -25,3 +25,25 @@ class Entry(models.Model):
         verbose_name = "Blog Entry"
         verbose_name_plural = "Blog Entries"
         ordering = ["-created"]
+
+class Tag(models.Model):
+    tag = models.CharField(max_length=20)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.tag
+
+    class Meta:
+        verbose_name = "Tag Name"
+        verbose_name_plural = "Tag Names"
+        ordering = ["-created"]
+
+class BlogEntryTag(models.Model):
+    blog_entry = models.ForeignKey(Entry, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.DO_NOTHING)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Blog Entry Tag"
+        verbose_name_plural = "Blog Entry Tags"
+        ordering = ["-blog_entry", "-tag"]

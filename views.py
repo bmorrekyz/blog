@@ -25,15 +25,25 @@ def logout(request):
     return redirect('index')
 
 def index(request):
+    #
+    # query = "select \
+    #             id, title, body, slug, markup, \
+    #             EXTRACT(YEAR FROM created)::SMALLINT as pub_year, \
+    #             EXTRACT(MONTH FROM created)::SMALLINT as pub_month, \
+    #             EXTRACT(DAY FROM created)::SMALLINT as pub_day \
+    #         from blog_entry \
+    #         where publish=True \
+    #         order by created desc;"
 
-    query = "select \
-                id, title, body, slug, markup, \
-                EXTRACT(YEAR FROM created)::SMALLINT as pub_year, \
-                EXTRACT(MONTH FROM created)::SMALLINT as pub_month, \
-                EXTRACT(DAY FROM created)::SMALLINT as pub_day \
-            from blog_entry \
-            where publish=True \
-            order by created desc;"
+    query = "SELECT BE.id, BE.title, BE.body, BE.slug, BE.markup, BT.tag, \
+                EXTRACT(YEAR FROM BE.created)::SMALLINT as pub_year, \
+                EXTRACT(MONTH FROM BE.created)::SMALLINT as pub_month, \
+                EXTRACT(DAY FROM BE.created)::SMALLINT as pub_day \
+            FROM blog_entry AS BE, blog_blogentrytag AS BET, blog_tag AS BT \
+            WHERE \
+            	BE.publish=True \
+            	AND BE.id=BET.blog_entry_id \
+            	AND BET.tag_id=BT.id;"
 
     blog_list = Entry.objects.raw(query)
 
