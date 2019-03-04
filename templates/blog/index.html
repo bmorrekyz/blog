@@ -8,8 +8,11 @@
   {% for entry in blog_list %}
   <div class="entry padded brillant_bkg">
     <h4>{{entry.title|upper}}</h4>
-    <p><small>{{entry.pub_month}}/{{entry.pub_day}}/{{entry.pub_year}}</small></p>
-    <p><small><a href="entry/{{entry.slug}}#disqus_thread"></a></small></p>
+    <p>
+      {{entry.pub_month}}/{{entry.pub_day}}/{{entry.pub_year}}
+      -
+      <a href="entry/{{entry.slug}}#disqus_thread"></a>
+    </p>
 
     <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
 
