@@ -19,14 +19,16 @@
         <span class="tags">{{entry.tag_full}}</span> -
         <a href="entry/{{entry.slug}}#disqus_thread"></a>
       </h5>
-      
+
       <span class="title_text">{{entry.title|upper}}</span>
 
       <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
 
+      {% if entry.body|length > 500 %}
       <h5 class="right">
         <a href="entry/{{entry.slug}}">CONTINUE READING...</a>
       </h5>
+      {% endif %}
 
       <br><br>
 
