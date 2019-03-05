@@ -1,1 +1,1 @@
-# blog app for my site
+# blog app for my django-powered site
