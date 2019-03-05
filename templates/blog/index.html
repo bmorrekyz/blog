@@ -50,12 +50,12 @@
       <span class="year">{{entry.pub_year}}</span>
     </span>
 
-    <span class="title_text">{{entry.title|upper}}</span>
-
     <h5>Published by Dinara Sagitova in
       <span class="tags">{{entry.tag_full}}</span> -
       <a href="entry/{{entry.slug}}#disqus_thread"></a>
     </h5>
+    <span class="title_text">{{entry.title|upper}}</span>
+
 
     <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
 
