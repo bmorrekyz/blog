@@ -3,68 +3,34 @@
 {% load static %}
 {% load markup_tags %}
 
-{% block head_extra %}
-  <style>
-    .date {
-      float: left;
-      text-align: center;
-      font-weight: bold;
-      color: grey;
-      margin-right: 15px;
-    }
-    .date .month  {
-      font-size: 1.7em;
-    }
-    .date .year  {
-      font-size: 1.2em;
-    }
-    .date .day {
-      font-size: 2.2em;
-      color: #3de6d7;
-    }
-
-    .tags {
-      padding: 2px;
-      width: 50px;
-      text-align: center;
-      text-decoration: none;
-      background: #e6e6e6;
-    }
-    .title_text {
-      font-size:1.1em !important;
-      font-family: 'Corben', serif;
-    }
-
-  </style>
-{% endblock %}
-
 {% block content %}
 
   {% for entry in blog_list %}
 
-  <div class="entry padded brillant_bkg" name="tag_{{entry.tag}}">
+    <div class="entry padded brillant_bkg" name="tag_{{entry.tag}}">
 
-    <span class="date">
-      <span class="month">{{entry.pub_month}}</span>
-      <span class="day">{{entry.pub_day}}</span>
-      <span class="year">{{entry.pub_year}}</span>
-    </span>
+      <span class="date">
+        <span class="month">{{entry.pub_month}}</span>
+        <span class="day">{{entry.pub_day}}</span>
+        <span class="year">{{entry.pub_year}}</span>
+      </span>
 
-    <h5>Published by Dinara Sagitova in
-      <span class="tags">{{entry.tag_full}}</span> -
-      <a href="entry/{{entry.slug}}#disqus_thread"></a>
-    </h5>
-    <span class="title_text">{{entry.title|upper}}</span>
+      <h5>Published by Dinara Sagitova in
+        <span class="tags">{{entry.tag_full}}</span> -
+        <a href="entry/{{entry.slug}}#disqus_thread"></a>
+      </h5>
+      
+      <span class="title_text">{{entry.title|upper}}</span>
 
-    <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
+      <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
 
-    <h5 class="right">
-      <a href="entry/{{entry.slug}}">CONTINUE READING...</a>
-    </h5>
+      <h5 class="right">
+        <a href="entry/{{entry.slug}}">CONTINUE READING...</a>
+      </h5>
 
-    <br><br>
+      <br><br>
 
-  </div>
+    </div>
   {% endfor %}
 
 {% endblock %}
@@ -75,16 +41,7 @@
 
     <hr>
 
-    <div id="social_media" class="text-center">
-      <p>connect with me on</p>
-      <a href="https://twitter.com/bmorreliving" target="_blank">
-        <i class="fab fa-twitter-square fa-3x">
-        </i>
-      </a>
-      <a href="https://github.com/bmorrekyz" target="_blank">
-        <i class="fab fa-github-square fa-3x"></i>
-      </a>
-    </div>
+    {% include "./includes/social_media.html" %}
 
     <hr>
 

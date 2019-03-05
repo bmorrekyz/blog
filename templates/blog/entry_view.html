@@ -18,11 +18,11 @@
 <div class="entry padded brillant_bkg">
 
   {% if entry %}
-    <h2>{{ entry.title }}</h2>
-    <h5>{{ entry.created }}</h5>
-    <p>{{ entry.body|apply_markup:entry.markup }}</p>
-    
-    <br><br><br>
+
+  <span class="title_text">{{entry.title|upper}}</span>
+  <h5>Published by Dinara Sagitova on {{entry.created}}</h5>
+
+  <p>{{ entry.body|apply_markup:entry.markup}}</p>
 
   {% else %}
     <h2>This post no longer exists.</h2>

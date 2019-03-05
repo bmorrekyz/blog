@@ -85,3 +85,33 @@ a:hover {
   box-shadow: 2px 5px #888888;
   margin: 10px;
 }
+
+.date {
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  color: grey;
+  margin-right: 15px;
+}
+.date .month  {
+  font-size: 1.7em;
+}
+.date .year  {
+  font-size: 1.2em;
+}
+.date .day {
+  font-size: 2.2em;
+  color: #3de6d7;
+}
+
+.tags {
+  padding: 2px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  background: #e6e6e6;
+}
+.title_text {
+  font-size:1.1em !important;
+  font-family: 'Corben', serif;
+}
