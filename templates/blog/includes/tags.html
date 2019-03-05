@@ -1,15 +1,14 @@
 
 {% block head_extra %}
   <style>
-    .caps {
-      text-transform: uppercase;
-    }
+    .caps { text-transform: uppercase; }
   </style>
 {% endblock %}
 
 {% block content %}
 
 <div id="tag_count">
+
   <p><b>Labels</b></p>
 
   {% if tag_count %}
@@ -21,6 +20,13 @@
     {% endfor %}
   {% endif %}
 
+</div>
+
+<br>
+<div id="filter_status" style="display:none;">
+  <span id="filter_text"></span>
+  <br>
+  <a id="filter_all">show all entries</a>
 </div>
 
 {% endblock %}

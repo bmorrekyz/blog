@@ -63,12 +63,13 @@
 {% block script_extra %}
 <script type="text/javascript">
 
-  const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"
   ];
-
+  
   let archive = JSON.parse('{{archive}}'.replace(/&quot;/g, '"'));
-  console.log(archive);
+
   for (year in archive)
   {
     let year_node = $( ".year" ).clone();
@@ -85,14 +86,15 @@
 
       $('#month_'+month +" > span.caret").text(monthNames[month-1]);
       $('span#month_'+month).css('display','none');
+
       // for posts in month
       for (let post = 0; post < archive[year][month].length; post++ )
       {
         let title = archive[year][month][post]["title"];
         let slug = archive[year][month][post]["slug"];
         let link = `<a href="entry/${slug}">- ${title}</a>`;
-
-        $("#year_"+year+" #month_"+month+" ul").append("<li>"+link+"</li>");
+        let list_item = "<li>"+link+"</li>";
+        $("#year_"+year+" #month_"+month+" ul").append(list_item);
       }
     }
   }

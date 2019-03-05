@@ -9,7 +9,7 @@
       float: left;
       text-align: center;
       font-weight: bold;
-      color: #46edde;
+      color: grey;
       margin-right: 15px;
     }
     .date .month  {
@@ -28,7 +28,11 @@
       width: 50px;
       text-align: center;
       text-decoration: none;
-      background: #3de6d7;
+      background: #e6e6e6;
+    }
+    .title_text {
+      font-size:1.5em !important;
+      font-family: 'Corben', serif;
     }
 
   </style>
@@ -37,28 +41,21 @@
 {% block content %}
 
   {% for entry in blog_list %}
-  <div id="filter_status" class="text-center" style="display:none;">
-    <span id="filter_text"></span>
-    <br>
-    <a id="filter_all">show all</a>
-  </div>
 
   <div class="entry padded brillant_bkg" name="tag_{{entry.tag}}">
 
-    <div class="date">
+    <span class="date">
       <span class="month">{{entry.pub_month}}</span>
       <span class="day">{{entry.pub_day}}</span>
       <span class="year">{{entry.pub_year}}</span>
-    </div>
+    </span>
 
-    <h4>{{entry.title|upper}}</h4>
+    <span class="title_text">{{entry.title|upper}}</span>
 
-    <div>
-      <h5>Published by Dinara Sagitova in
-        <span class="tags">{{entry.tag_full}}</span> -
-        <a href="entry/{{entry.slug}}#disqus_thread"></a>
-      </h5>
-    </div>
+    <h5>Published by Dinara Sagitova in
+      <span class="tags">{{entry.tag_full}}</span> -
+      <a href="entry/{{entry.slug}}#disqus_thread"></a>
+    </h5>
 
     <p>{{ entry.body|apply_markup:entry.markup|truncatechars:500 }}</p>
 

@@ -15,12 +15,17 @@
     text-align:left;
     text-justify:inter-word;
   }
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="center" style="overflow: auto;">
-
+<div class="padded clearfix brillant_bkg">
+  <br><br>
   <figure class="img text-center">
     <img src="/static/blog/images/about_pic.png" alt="profile_picture" width="100%">
     <figcaption class="center"><small>Crane Hill Disc Golf Course</small></figcaption>

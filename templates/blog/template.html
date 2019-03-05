@@ -5,8 +5,9 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Libre+Barcode+39+Text" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Corben" rel="stylesheet">
 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
@@ -25,7 +26,7 @@
 <body class="main_bk">
 
 	<header class="header main_bk">
-		<h2>yet another programming blog</h2>
+		<h2>Dinara Sagitova</h2>
 	</header>
 
 	<navbar id="navbar" class="navbar main_bk">
@@ -35,11 +36,10 @@
 			<a href="{% url 'dashboard' %}" id="menu_dashboard" class="nav-menu left">dashboard</a>
 			<a href="{% url 'logout' %}" id="menu_logout" class="nav-menu right">logout</a>
 			{% else %}
-			<a id="menu_login" class="nav-menu right">login</a>
+			<a id="menu_login" class="nav-menu right"><i class="fas fa-sign-in-alt"></i></a>
 			{% endif %}
 
 			<a href="{% url 'index' %}" id="menu_" class="nav-menu left">blog</a>
-			<!-- <a href="{% url 'archive' %}" id="menu_archive" class="nav-menu left">archive</a> -->
 			<a href="{% url 'about' %}" id="menu_about" class="nav-menu left">about</a>
 		</div>
 

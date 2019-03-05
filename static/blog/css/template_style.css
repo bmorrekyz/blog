@@ -16,8 +16,13 @@ a:hover {
 }
 
 .header {
-  font-size:1.75em !important;
+  font-size:2.75em !important;
   text-align: center;
+  font-family: 'Libre Barcode 39 Text', cursive;
+}
+.header > h2  {
+  margin:10px !important;
+  padding:0 !important;
 }
 
 .navbar {
@@ -54,7 +59,7 @@ a:hover {
 }
 
 .brillant_bkg {
-  background-image: url('http://cdn.backgroundhost.com/backgrounds/subtlepatterns/brillant.png');
+  background-image: url('brillant.png');
   background-repeat: repeat;
 }
 
