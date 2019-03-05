@@ -17,7 +17,9 @@
 
       <h5>Published by Dinara Sagitova in
         <span class="tags">{{entry.tag_full}}</span> -
-        <a href="entry/{{entry.slug}}#disqus_thread"></a>
+        <a href="http://dinarasagitova.com/blog/entry/{{entry.slug}}#disqus_thread"
+          data-disqus-identifier="{{entry.slug}}_identifier"
+        ></a>
       </h5>
 
       <span class="title_text">{{entry.title|upper}}</span>
